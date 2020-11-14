@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = { //配置对象
    // 1. 模式
    // mode: 'production',
@@ -30,8 +31,8 @@ module.exports = { //配置对象
          },
          //处理CSS文件
          {
-            test: /\.css$/i,
-            use: ['style-loader', 'css-loader'],    //顺序不能变，从右往左依次执行
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
          },
          //打包图片
          {
@@ -46,6 +47,11 @@ module.exports = { //配置对象
                },
             ],
          },
+         {
+            test: /\.vue$/,
+            include: path.resolve(__dirname, 'src'),
+            loader: 'vue-loader'
+         }
       ]
    },
    // 5.插件
@@ -53,15 +59,29 @@ module.exports = { //配置对象
       new HtmlWebpackPlugin({
          template: 'index.html',   //将哪个页面作为模板页面处理（在根目录查找）
          filename: 'index.html'   //生成页面(在butput指定的path下)
-      })
+      }),
+      new VueLoaderPlugin()
    ],
+
    //配置开发服务器
    devServer: {
       open: true, // 自动打开浏览器
-      quiet: true, // 不做太多日志输出
+      // quiet: true, // 不做太多日志输出
    },
+
    // 配置开启source-map调试
    devtool: 'cheap-module-eval-source-map',
+
+   // 引入模块的解析
+   resolve: {
+      extensions: ['.js', '.vue', '.json'], // 可以省略的后缀名
+      alias: { // 路径别名(简写方式)
+         'vue$': 'vue/dist/vue.esm.js',  // 表示精准匹配 from vue = from vue/dist/vue.esm.js
+         '@': path.resolve(__dirname, 'src') //以@表示当前项目的src目录
+      }
+   }
+
+
 }
 /*
   weback直接运行必须全局安装加局部安转

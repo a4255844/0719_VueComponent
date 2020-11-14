@@ -1,4 +1,5 @@
 ## 1. 初始化项目
+
     1). 生成package.json
         yarn init -y
 
@@ -9,7 +10,8 @@
     3). 创建页面文件: index.html
         <div id="root"></div>
 
-## 2. webpack基本使用
+## 2. webpack 基本使用
+
     1). 下载依赖包
         yarn add -D webpack webpack-cli
         yarn add -D html-webpack-plugin
@@ -44,25 +46,26 @@
             })
           ]
         }
-    
+
     3). 生成环境打包并运行
         配置打包命令:  "build": "webpack --mode production"
         打包项目: yarn build
         运行打包项目: serve dist
 
 ## 3. 开发环境运行
+
     1). 现在的问题:
         每次修改项目代码后, 必须重新打包, 重新运行
-    
+
     2). 下载依赖包
         yarn add -D webpack-dev-server
-    
+
     3). 配置开发服务器
         devServer: {
           open: true, // 自动打开浏览器
           quiet: true, // 不做太多日志输出
         },
-    
+
     4). 配置开启source-map调试
         devtool: 'cheap-module-eval-source-map',
 
@@ -71,6 +74,7 @@
         执行命令: yarn dev
 
 ## 4. 打包处理 ES6/CSS/图片
+
     1). 处理ES6
         a. 下载依赖包
             yarn add -D babel-loader @babel/core @babel/preset-env
@@ -86,7 +90,7 @@
                 }
               }
             }
-    
+
     2). 处理CSS
         a. 下载依赖包
             yarn add -D css-loader style-loader
@@ -124,14 +128,15 @@
             document.body.appendChild(image)
             document.getElementById('root').innerHTML = '<h1>Hello222</h1>'
 
-## 5. 搭建vue的环境
+## 5. 搭建 vue 的环境
+
     0). 文档:
         https://vue-loader.vuejs.org/zh/
 
     1). 下载依赖包:
         yarn add vue
         yarn add -D vue-loader vue-template-compiler
-    
+
     2). 配置
         const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
@@ -155,12 +160,14 @@
             'vue$': 'vue/dist/vue.esm.js',  // 表示精准匹配
           }
         }
-    
-    3). 编码: 
+
+    3). 编码:
         src/App.vue
         src/index.js
-        
+
+
 ## 区分使用生产环境与开发环境
+
     使用生产环境:
         npm run build   ==> webpack
         1). 在内存中进行编译打包, 生成内存中的打包文件
@@ -169,3 +176,12 @@
         npm run dev   ==> webpack-dev-server
         1). 在内存中进行编译打包, 生成内存中的打包文件
         2). 调动服务器, 运行内存中的打包文件   ===> 可以通过浏览器虚拟路径访问
+
+## 搭建 Vue 的开发环境
+
+1). 配置处理.Vue 组件文件的 loader 和 plugin
+2). 配置使用 vue-style-loader 替换 style-loader (2020 年 11 月配置失效)
+3). 解决无法编译 vue 模板的错误
+原因：默认引入的 vue 是不带编译器版本的，无法对 template 配置指定模板进行编译
+解决：配置模块别名来指定引入 vue 带编译器的版本
+4). 配置省略模块后缀名(.js/.vue/.json)
