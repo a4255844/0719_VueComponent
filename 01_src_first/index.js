@@ -6,14 +6,9 @@ import App from './App'  //引入自定义组件
 */
 //注册全剧组件
 // Vue.component('App', App)
-//在Vue原型链上添加一个全局用于绑定事件监听和分发事件的vm实例对象=>公共的全局事件总线 (vm实例对象==组件对象)
-// Vue.prototype.$globalEventBus = new Vue()
 new Vue({
    // el: '#root',  两种指定标签的方式 el 和 .$mount('root')
    //注册局部组件
-   beforeCreate() {
-      Vue.prototype.$globalEventBus = this
-   },
    components: {     //注册组件（后面才可以写组件标签）相当于确定组件的标签名,key可以自定义，value必须是引入的变量
       App: App
    },

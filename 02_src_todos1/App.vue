@@ -1,10 +1,8 @@
 <template>
   <div class="todo-container">
     <h1>todoList</h1>
-    <!-- 自定义事件的方式，子组件向父组件进行通信 -->
-    <!-- <Header @addTodo="addTodo" /> -->
-    <Header ref="header" />
-    <List :todos="todos" />
+    <Header :addTodo="addTodo" />
+    <List :todos="todos" :deleteTodo="deleteTodo" :updateTodo="updateTodo" />
     <Footer
       :todos="todos"
       :removeCompletedTodos="removeCompletedTodos"
@@ -17,7 +15,6 @@
 import Header from "@/components/Header";
 import List from "./components/List";
 import Footer from "@/components/Footer";
-import PubSub from "pubsub-js";
 import { saveTodos, readTodos } from "@/utils/storageUtils.js";
 export default {
   data() {
@@ -31,14 +28,6 @@ export default {
       // this.todos = JSON.parse(localStorage.getItem("todos_key") || "[]");
       this.todos = readTodos();
     }, 1000);
-    //通过ref标识ID来绑定事件监听
-    this.$refs.header.$on("addTodo", this.addTodo);
-    //通过全局事件总线绑定事件监听
-    this.$globalEventBus.$on("deleteTodo", this.deleteTodo);
-    PubSub.subscribe("updateTodo", (msg, { todo, isCheck }) => {
-      // this.updateTodo(todo, isCheck);
-      todo.completed = isCheck;
-    });
   },
   components: {
     Header,
@@ -60,9 +49,9 @@ export default {
     checkAll(isCheckAll) {
       this.todos.forEach((todo) => (todo.completed = isCheckAll));
     },
-    //  updateTodo(todo, isCheck) {
-    //    todo.completed = isCheck;
-    //  },
+    updateTodo(todo, isCheck) {
+      todo.completed = isCheck;
+    },
   },
   watch: {
     //监视todos数组内全部层次的数据，如果发生变化，就保存到local
@@ -76,11 +65,6 @@ export default {
       // },
       handler: saveTodos,
     },
-  },
-  beforeDestroy() {
-    //在组建销毁前，移除绑定事件监听
-    this.$refs.header.$off("addTodo");
-    this.$globalEventBus.$off("deleteTodo");
   },
 };
 </script>

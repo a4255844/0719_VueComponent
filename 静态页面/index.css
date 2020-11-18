@@ -1,0 +1,48 @@
+/* bace */
+.todo-container {
+   width: 590px;
+   margin: 50px auto;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+ul,
+input {
+   margin: 0;
+   padding: 0;
+}
+
+
+/* header */
+.todo-container .todoheader input {
+   height: 30px;
+   width: 580px;
+   padding-left: 10px;
+   margin-bottom: 10px;
+   border: 1px solid #ccc;
+}
+
+/* main */
+.todo-main input {
+   margin-left: 10px;
+}
+
+li {
+   list-style: none;
+   height: 36px;
+   width: 100%;
+   line-height: 36px;
+   margin-bottom: 10px;
+   border: 1px solid #ccc;
+}
+
+/* footer */
+.todo-footer input {
+   margin-left: 10px;
+   margin-right: 20px;
+}
+
+.todo-footer .btn {
+   float: right;
+}
