@@ -24,7 +24,12 @@ module.exports = { //配置对象
             use: {
                loader: 'babel-loader',
                options: {
-                  presets: ['@babel/preset-env'], //预设包：包含多个常用插件包的一个大包
+                  presets: [
+                     ['@babel/preset-env', {
+                        useBuiltIns: 'usage',
+                        'corejs': 2
+                     }]
+                  ], //预设包：包含多个常用插件包的一个大包
                   // plugins: []          //可以添加需要依赖的包
                }
             }
@@ -58,15 +63,27 @@ module.exports = { //配置对象
    plugins: [
       new HtmlWebpackPlugin({
          template: 'index.html',   //将哪个页面作为模板页面处理（在根目录查找）
-         filename: 'index.html'   //生成页面(在butput指定的path下)
+         filename: 'index.html'   //生成页面(在output指定的path下)
       }),
       new VueLoaderPlugin()
    ],
 
    //配置开发服务器
    devServer: {
+      port: 8080,
       open: true, // 自动打开浏览器
       // quiet: true, // 不做太多日志输出
+      proxy: { //解决跨越
+         //处理以api开头路径的请求
+         // "/api" : http://localhost:4000  http://localhost:4000/api/search/users
+         '/api': {
+            target: 'http://localhost:4000',  //转发目标地址
+            pathRewrite: {
+               '^/api': '' //转发请求时去除路径前面的/api
+            },
+            changeOrigin: true   //支持跨域，如果协议/主机也不相同，必须加上
+         }
+      }
    },
 
    // 配置开启source-map调试
