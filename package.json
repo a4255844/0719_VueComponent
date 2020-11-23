@@ -13,6 +13,7 @@
       "@babel/preset-env": "^7.12.1",
       "@babel/runtime-corejs2": "^7.12.5",
       "babel-loader": "^8.2.1",
+      "babel-plugin-component": "^1.1.1",
       "css-loader": "^5.0.1",
       "file-loader": "4.3.0",
       "html-webpack-plugin": "^4.5.0",
@@ -27,7 +28,9 @@
    },
    "dependencies": {
       "axios": "^0.21.0",
+      "mint-ui": "^2.2.13",
       "pubsub-js": "^1.9.1",
-      "vue": "^2.6.12"
+      "vue": "^2.6.12",
+      "vue-router": "^3.4.9"
    }
 }

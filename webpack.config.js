@@ -11,7 +11,8 @@ module.exports = { //配置对象
    // 3.出口
    output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'static/js/[name].bundle.js'  //可以带路径
+      filename: 'static/js/[name].bundle.js',  //可以带路径
+      publicPath: '/'    // 引入打包的文件时路径以/开头
    },
    // 4.loader模块加载器
    module: {
@@ -30,7 +31,12 @@ module.exports = { //配置对象
                         'corejs': 2
                      }]
                   ], //预设包：包含多个常用插件包的一个大包
-                  // plugins: []          //可以添加需要依赖的包
+                  plugins: [["babel-plugin-component",
+                     {
+                        "libraryName": "mint-ui",  //针对mint-ui库实现按需引入打包
+                        "style": true        //自动打包对应的css
+                     }
+                  ]]
                }
             }
          },
@@ -83,8 +89,18 @@ module.exports = { //配置对象
             },
             changeOrigin: true   //支持跨域，如果协议/主机也不相同，必须加上
          }
-      }
+      },
+      historyApiFallback: true,  //任意的404错误响应都被替换为 index.html
    },
+   /* 
+   1. 请求的路径有对应的资源
+      http://localhost:8080/ ==> index.html
+      http://localhost:8000/static/css/base.css ===> base.css
+   2. 请求的路径与代理服务器监视的路径匹配
+      由代理服务器转发请求，得到资源后返回
+   3. 其他所有的请求（404）
+      返回index页面，请求的path部分会被当做前台路由来处理
+   */
 
    // 配置开启source-map调试
    devtool: 'cheap-module-eval-source-map',

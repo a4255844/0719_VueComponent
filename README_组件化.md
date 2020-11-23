@@ -79,3 +79,21 @@
         多组件共享状态(数据的管理)
         组件间的关系也没有限制
         功能比事件总线强大, 更适用于vue项目
+
+## 4 与后台进行通信
+
+     1). 使用什么发ajax请求？
+         vue-resource  vue1.x使用
+         axios vue2.x使用
+     2). 在什么时候发请求？
+         mounted()中
+         时间监听回调函数或相关函数中
+
+## 7. vue UI 组件库
+
+      常用的UI组件库
+         PC: Element / iview /
+         Mobile: mint-ui / vant-ui/ cube-ui
+      mint-ui的使用
+         根据官方文档使用
+         配置实现按需引入打包

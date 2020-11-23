@@ -1,6 +1,5 @@
 import Vue from 'vue/dist/vue.esm.js'
 import App from './App'  //引入自定义组件
-import VueRouter from '@/router'
 /* 
  注意： 引入的模块如果不带斜杠，它会默认寻找node_modules内寻找
         如果带斜杠，它会寻找当前目录的相对路径
@@ -18,6 +17,5 @@ new Vue({
    components: {     //注册组件（后面才可以写组件标签）相当于确定组件的标签名,key可以自定义，value必须是引入的变量
       App: App
    },
-   router: VueRouter, //所有组件都能通过$router属性看到router对象 / 所有组件都有了一个代表当前路由的data数据：$route
    template: '<App/>'
 }).$mount('#root')
